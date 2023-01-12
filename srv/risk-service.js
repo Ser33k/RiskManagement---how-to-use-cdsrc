@@ -36,14 +36,15 @@ module.exports = cds.service.impl(async function () {
       // We don't want them in our application
       req.query.where("LastName <> '' and FirstName <> '' ");
 
+      // console.log("KEYKEY: " + cds.requires.API_BUSINESS_PARTNER.credentials.headers.APIKey);
       // console.log("aaaaaa: " + process.env.apikey);
-      // return await BPsrv.run(req.query);
-      return await BPsrv.transaction(req).send({
-         query: req.query,
-         headers: {
-            apikey: "T5Y9KoccmXfh1L3WGI8WDvyTGnXZA0pO",
-         },
-      });
+      return await BPsrv.run(req.query);
+      // return await BPsrv.transaction(req).send({
+      //    query: req.query,
+      //    headers: {
+      //       apikey: process.env.apikey,
+      //    },
+      // });
    });
 
    /**
@@ -87,9 +88,9 @@ module.exports = cds.service.impl(async function () {
                   query: SELECT.one(this.entities.BusinessPartners)
                      .where({ BusinessPartner: risk.bp_BusinessPartner })
                      .columns(["BusinessPartner", "LastName", "FirstName"]),
-                  headers: {
-                     apikey: process.env.apikey,
-                  },
+                  // headers: {
+                  //    apikey: process.env.apikey,
+                  // },
                });
                risk.bp = bp;
             })

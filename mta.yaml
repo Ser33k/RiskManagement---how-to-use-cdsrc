@@ -24,6 +24,7 @@ modules:
     requires:
       - name: risk-management-db
       - name: risk-management-auth
+      - name: demo-destination
 
   - name: risk-management-db-deployer
     type: hdb
@@ -55,6 +56,10 @@ resources:
     parameters:
       service: hana
       service-plan: hdi-shared
+  - name: demo-destination
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: demo-destination
   - name: risk-management-auth
     type: org.cloudfoundry.managed-service
     parameters:
