@@ -7,7 +7,7 @@ require('dotenv').config();
    */
 module.exports = cds.service.impl(async function () {
    // Define constants for the Risk and BusinessPartners entities from the risk-service.cds file
-   const { Risks, BusinessPartners } = this.entities;
+   const { Risks, BusinessPartners, PurchaseOrders } = this.entities;
 
    /**
    * Set criticality after a READ operation on /risks
@@ -46,6 +46,18 @@ module.exports = cds.service.impl(async function () {
       //    },
       // });
    });
+
+   const POsrv = await cds.connect.to("API_PURCHASEORDER_PROCESS_SRV");
+
+   this.on("READ", PurchaseOrders, async req => {
+      // return await POsrv.run(req.query);
+      return await POsrv.transaction(req).send({
+         query: req.query,
+         headers: {
+            apikey: process.env.apikeyPOs,
+         },
+      });
+   })
 
    /**
    * Event-handler on risks.
