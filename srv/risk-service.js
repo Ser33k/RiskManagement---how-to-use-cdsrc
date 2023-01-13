@@ -50,13 +50,13 @@ module.exports = cds.service.impl(async function () {
    const POsrv = await cds.connect.to("API_PURCHASEORDER_PROCESS_SRV");
 
    this.on("READ", PurchaseOrders, async req => {
-      // return await POsrv.run(req.query);
-      return await POsrv.transaction(req).send({
-         query: req.query,
-         headers: {
-            apikey: process.env.apikeyPOs,
-         },
-      });
+      return await POsrv.run(req.query);
+      // return await POsrv.transaction(req).send({
+      //    query: req.query,
+      //    headers: {
+      //       apikey: process.env.apikeyPOs,
+      //    },
+      // });
    })
 
    /**
