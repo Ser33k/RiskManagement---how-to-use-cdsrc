@@ -1,10 +1,11 @@
 
 {
   "welcomeFile": "/app/risks/webapp/index.html",
+  "authenticationMethod": "route",
   "routes": [
     {
       "source": "^/app/(.*)$",
-      "localDir": "./",
+      "localDir": ".",
       "target": "$1"
     },
     {

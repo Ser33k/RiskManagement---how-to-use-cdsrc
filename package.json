@@ -12,6 +12,7 @@
     "dependencies": {
         "@sap-cloud-sdk/http-client": "^2.5.0",
         "@sap/cds": "^6",
+        "@sap/cds-odata-v2-adapter-proxy": "^1.9.18",
         "@sap/xssec": "^3",
         "dotenv": "^16.0.3",
         "express": "^4",
@@ -20,8 +21,8 @@
     },
     "devDependencies": {
         "@sap/ux-specification": "^1.102.14",
-        "sqlite3": "^5.0.4",
-        "rimraf": "^3.0.2"
+        "rimraf": "^3.0.2",
+        "sqlite3": "^5.0.4"
     },
     "scripts": {
         "start": "cds run",
@@ -78,10 +79,10 @@
                 }
             },
             "db": {
-                "kind": "sql",
-                "credentials": {
-                    "database": "db.sqlite"
-                }
+                "kind": "sql"
+            },
+            "auth": {
+                "kind": "xsuaa"
             },
             "[production]": {
                 "db": {
@@ -98,6 +99,11 @@
                 "kind": "odata-v2",
                 "model": "srv/external/API_PURCHASEORDER_PROCESS_SRV",
                 "[sandbox]": {
+                    "credentials": {
+                        "url": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_PURCHASEORDER_PROCESS_SRV/"
+                    }
+                },
+                "[development]": {
                     "credentials": {
                         "url": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_PURCHASEORDER_PROCESS_SRV/"
                     }

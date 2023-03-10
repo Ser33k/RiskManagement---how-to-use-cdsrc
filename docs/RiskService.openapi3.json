@@ -1,0 +1,2941 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Service for namespace RiskService",
+    "description": "This service is located at [/service/risk/](/service/risk/)\n\n## Entity Data Model\n![ER Diagram](https://yuml.me/diagram/class/[Risks{bg:lightslategray}],[Risks]*-0..1[Mitigations],[Risks]-0..1>[BusinessPartners],[Mitigations{bg:lightslategray}],[BusinessPartners{bg:lightslategray}],[PurchaseOrders{bg:lightslategray}],[PurchaseOrders]++-0..1>[DraftAdministrativeData],[PurchaseOrders]-0..1>[PurchaseOrders],[RisksView{bg:lightslategray}],[DraftAdministrativeData{bg:lightslategray}],[RisksView%20{bg:lawngreen}]++-*>[RisksView],[PurchaseOrders%20{bg:lawngreen}]++-*>[PurchaseOrders],[BusinessPartners%20{bg:lawngreen}]++-*>[BusinessPartners],[Mitigations%20{bg:lawngreen}]++-*>[Mitigations],[Risks%20{bg:lawngreen}]++-*>[Risks])\n\n### Legend\n![Legend](https://yuml.me/diagram/plain;dir:TB;scale:60/class/[External.Type{bg:whitesmoke}],[ComplexType],[EntityType{bg:lightslategray}],[EntitySet/Singleton/Operation{bg:lawngreen}])",
+    "version": ""
+  },
+  "x-sap-api-type": "ODATAV4",
+  "x-odata-version": "4.0",
+  "x-sap-shortText": "Service for namespace RiskService",
+  "servers": [
+    {
+      "url": "/service/risk"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Risks"
+    },
+    {
+      "name": "Mitigations"
+    },
+    {
+      "name": "BusinessPartners"
+    },
+    {
+      "name": "PurchaseOrders"
+    },
+    {
+      "name": "RisksView"
+    }
+  ],
+  "paths": {
+    "/Risks": {
+      "get": {
+        "summary": "Retrieve a list of risks.",
+        "tags": [
+          "Risks"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/top"
+          },
+          {
+            "$ref": "#/components/parameters/skip"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "name": "$filter",
+            "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "name": "$orderby",
+            "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "createdAt",
+                  "createdAt desc",
+                  "createdBy",
+                  "createdBy desc",
+                  "modifiedAt",
+                  "modifiedAt desc",
+                  "modifiedBy",
+                  "modifiedBy desc",
+                  "ID",
+                  "ID desc",
+                  "title",
+                  "title desc",
+                  "owner",
+                  "owner desc",
+                  "prio",
+                  "prio desc",
+                  "descr",
+                  "descr desc",
+                  "miti_ID",
+                  "miti_ID desc",
+                  "impact",
+                  "impact desc",
+                  "bp_BusinessPartner",
+                  "bp_BusinessPartner desc",
+                  "criticality",
+                  "criticality desc"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "createdAt",
+                  "createdBy",
+                  "modifiedAt",
+                  "modifiedBy",
+                  "ID",
+                  "title",
+                  "owner",
+                  "prio",
+                  "descr",
+                  "miti_ID",
+                  "impact",
+                  "bp_BusinessPartner",
+                  "criticality"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$expand",
+            "description": "The value of $expand query option is a comma-separated list of navigation property names, stream property names, or $value indicating the stream content of a media-entity. The corresponding related entities and stream values will be represented inline, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "*",
+                  "miti",
+                  "bp"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved risks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Collection of Risks",
+                  "properties": {
+                    "@odata.count": {
+                      "$ref": "#/components/schemas/count"
+                    },
+                    "value": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RiskService.Risks"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a single risk.",
+        "tags": [
+          "Risks"
+        ],
+        "requestBody": {
+          "description": "New risk",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskService.Risks-create"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created risk",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.Risks"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/Risks({ID})": {
+      "parameters": [
+        {
+          "description": "key: ID",
+          "in": "path",
+          "name": "ID",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieve a single risk.",
+        "tags": [
+          "Risks"
+        ],
+        "parameters": [
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "createdAt",
+                  "createdBy",
+                  "modifiedAt",
+                  "modifiedBy",
+                  "ID",
+                  "title",
+                  "owner",
+                  "prio",
+                  "descr",
+                  "miti_ID",
+                  "impact",
+                  "bp_BusinessPartner",
+                  "criticality"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$expand",
+            "description": "The value of $expand query option is a comma-separated list of navigation property names, stream property names, or $value indicating the stream content of a media-entity. The corresponding related entities and stream values will be represented inline, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "*",
+                  "miti",
+                  "bp"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved risk",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.Risks"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Change a single risk.",
+        "tags": [
+          "Risks"
+        ],
+        "requestBody": {
+          "description": "New property values",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskService.Risks-update"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a single risk.",
+        "tags": [
+          "Risks"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/Risks({ID})/miti": {
+      "parameters": [
+        {
+          "description": "key: ID",
+          "in": "path",
+          "name": "ID",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieve miti of a risk.",
+        "tags": [
+          "Risks",
+          "Mitigations"
+        ],
+        "parameters": [
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "createdAt",
+                  "createdBy",
+                  "modifiedAt",
+                  "modifiedBy",
+                  "ID",
+                  "descr",
+                  "owner",
+                  "timeline"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$expand",
+            "description": "The value of $expand query option is a comma-separated list of navigation property names, stream property names, or $value indicating the stream content of a media-entity. The corresponding related entities and stream values will be represented inline, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "*",
+                  "risks"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved miti",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.Mitigations"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/Risks({ID})/bp": {
+      "parameters": [
+        {
+          "description": "key: ID",
+          "in": "path",
+          "name": "ID",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieve bp of a risk.",
+        "tags": [
+          "Risks",
+          "BusinessPartners"
+        ],
+        "parameters": [
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "BusinessPartner",
+                  "LastName",
+                  "FirstName"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved bp",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.BusinessPartners"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/Mitigations": {
+      "get": {
+        "summary": "Retrieve a list of mitigations.",
+        "tags": [
+          "Mitigations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/top"
+          },
+          {
+            "$ref": "#/components/parameters/skip"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "name": "$filter",
+            "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "name": "$orderby",
+            "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "createdAt",
+                  "createdAt desc",
+                  "createdBy",
+                  "createdBy desc",
+                  "modifiedAt",
+                  "modifiedAt desc",
+                  "modifiedBy",
+                  "modifiedBy desc",
+                  "ID",
+                  "ID desc",
+                  "descr",
+                  "descr desc",
+                  "owner",
+                  "owner desc",
+                  "timeline",
+                  "timeline desc"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "createdAt",
+                  "createdBy",
+                  "modifiedAt",
+                  "modifiedBy",
+                  "ID",
+                  "descr",
+                  "owner",
+                  "timeline"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$expand",
+            "description": "The value of $expand query option is a comma-separated list of navigation property names, stream property names, or $value indicating the stream content of a media-entity. The corresponding related entities and stream values will be represented inline, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "*",
+                  "risks"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved mitigations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Collection of Mitigations",
+                  "properties": {
+                    "@odata.count": {
+                      "$ref": "#/components/schemas/count"
+                    },
+                    "value": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RiskService.Mitigations"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a single mitigation.",
+        "tags": [
+          "Mitigations"
+        ],
+        "requestBody": {
+          "description": "New mitigation",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskService.Mitigations-create"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created mitigation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.Mitigations"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/Mitigations({ID})": {
+      "parameters": [
+        {
+          "description": "key: ID",
+          "in": "path",
+          "name": "ID",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieve a single mitigation.",
+        "tags": [
+          "Mitigations"
+        ],
+        "parameters": [
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "createdAt",
+                  "createdBy",
+                  "modifiedAt",
+                  "modifiedBy",
+                  "ID",
+                  "descr",
+                  "owner",
+                  "timeline"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$expand",
+            "description": "The value of $expand query option is a comma-separated list of navigation property names, stream property names, or $value indicating the stream content of a media-entity. The corresponding related entities and stream values will be represented inline, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "*",
+                  "risks"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved mitigation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.Mitigations"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Change a single mitigation.",
+        "tags": [
+          "Mitigations"
+        ],
+        "requestBody": {
+          "description": "New property values",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskService.Mitigations-update"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a single mitigation.",
+        "tags": [
+          "Mitigations"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/Mitigations({ID})/risks": {
+      "parameters": [
+        {
+          "description": "key: ID",
+          "in": "path",
+          "name": "ID",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieve a list of risks of a mitigation.",
+        "tags": [
+          "Mitigations",
+          "Risks"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/top"
+          },
+          {
+            "$ref": "#/components/parameters/skip"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "name": "$filter",
+            "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "name": "$orderby",
+            "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "createdAt",
+                  "createdAt desc",
+                  "createdBy",
+                  "createdBy desc",
+                  "modifiedAt",
+                  "modifiedAt desc",
+                  "modifiedBy",
+                  "modifiedBy desc",
+                  "ID",
+                  "ID desc",
+                  "title",
+                  "title desc",
+                  "owner",
+                  "owner desc",
+                  "prio",
+                  "prio desc",
+                  "descr",
+                  "descr desc",
+                  "miti_ID",
+                  "miti_ID desc",
+                  "impact",
+                  "impact desc",
+                  "bp_BusinessPartner",
+                  "bp_BusinessPartner desc",
+                  "criticality",
+                  "criticality desc"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "createdAt",
+                  "createdBy",
+                  "modifiedAt",
+                  "modifiedBy",
+                  "ID",
+                  "title",
+                  "owner",
+                  "prio",
+                  "descr",
+                  "miti_ID",
+                  "impact",
+                  "bp_BusinessPartner",
+                  "criticality"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$expand",
+            "description": "The value of $expand query option is a comma-separated list of navigation property names, stream property names, or $value indicating the stream content of a media-entity. The corresponding related entities and stream values will be represented inline, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "*",
+                  "miti",
+                  "bp"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved risks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Collection of Risks",
+                  "properties": {
+                    "@odata.count": {
+                      "$ref": "#/components/schemas/count"
+                    },
+                    "value": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RiskService.Risks"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a single risk of a mitigation.",
+        "tags": [
+          "Mitigations",
+          "Risks"
+        ],
+        "requestBody": {
+          "description": "New risk",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskService.Risks-create"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created risk",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.Risks"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/BusinessPartners": {
+      "get": {
+        "summary": "Retrieve a list of business partners.",
+        "tags": [
+          "BusinessPartners"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/top"
+          },
+          {
+            "$ref": "#/components/parameters/skip"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "name": "$filter",
+            "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "name": "$orderby",
+            "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "BusinessPartner",
+                  "BusinessPartner desc",
+                  "LastName",
+                  "LastName desc",
+                  "FirstName",
+                  "FirstName desc"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "BusinessPartner",
+                  "LastName",
+                  "FirstName"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved business partners",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Collection of BusinessPartners",
+                  "properties": {
+                    "@odata.count": {
+                      "$ref": "#/components/schemas/count"
+                    },
+                    "value": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RiskService.BusinessPartners"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/BusinessPartners('{BusinessPartner}')": {
+      "parameters": [
+        {
+          "description": "Key identifying a business partner in the SAP system. The key is unique within a client.",
+          "in": "path",
+          "name": "BusinessPartner",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "maxLength": 10
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieve a single business partner.",
+        "tags": [
+          "BusinessPartners"
+        ],
+        "parameters": [
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "BusinessPartner",
+                  "LastName",
+                  "FirstName"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved business partner",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.BusinessPartners"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/PurchaseOrders": {
+      "get": {
+        "summary": "Retrieve a list of purchase orders.",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/top"
+          },
+          {
+            "$ref": "#/components/parameters/skip"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "name": "$filter",
+            "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "name": "$orderby",
+            "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "PurchaseOrder",
+                  "PurchaseOrder desc",
+                  "CompanyCode",
+                  "CompanyCode desc",
+                  "PurchaseOrderType",
+                  "PurchaseOrderType desc",
+                  "Supplier",
+                  "Supplier desc",
+                  "PurchaseOrderDate",
+                  "PurchaseOrderDate desc",
+                  "IsActiveEntity",
+                  "IsActiveEntity desc",
+                  "HasActiveEntity",
+                  "HasActiveEntity desc",
+                  "HasDraftEntity",
+                  "HasDraftEntity desc"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "PurchaseOrder",
+                  "CompanyCode",
+                  "PurchaseOrderType",
+                  "Supplier",
+                  "PurchaseOrderDate",
+                  "IsActiveEntity",
+                  "HasActiveEntity",
+                  "HasDraftEntity"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$expand",
+            "description": "The value of $expand query option is a comma-separated list of navigation property names, stream property names, or $value indicating the stream content of a media-entity. The corresponding related entities and stream values will be represented inline, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "*",
+                  "DraftAdministrativeData",
+                  "SiblingEntity"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved purchase orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Collection of PurchaseOrders",
+                  "properties": {
+                    "@odata.count": {
+                      "$ref": "#/components/schemas/count"
+                    },
+                    "value": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RiskService.PurchaseOrders"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a single purchase order.",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "requestBody": {
+          "description": "New purchase order",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskService.PurchaseOrders-create"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created purchase order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.PurchaseOrders"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/PurchaseOrders(PurchaseOrder='{PurchaseOrder}',IsActiveEntity='{IsActiveEntity}')": {
+      "parameters": [
+        {
+          "description": "key: PurchaseOrder",
+          "in": "path",
+          "name": "PurchaseOrder",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "maxLength": 10
+          }
+        },
+        {
+          "description": "key: IsActiveEntity",
+          "in": "path",
+          "name": "IsActiveEntity",
+          "required": true,
+          "schema": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieve a single purchase order.",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "parameters": [
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "PurchaseOrder",
+                  "CompanyCode",
+                  "PurchaseOrderType",
+                  "Supplier",
+                  "PurchaseOrderDate",
+                  "IsActiveEntity",
+                  "HasActiveEntity",
+                  "HasDraftEntity"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$expand",
+            "description": "The value of $expand query option is a comma-separated list of navigation property names, stream property names, or $value indicating the stream content of a media-entity. The corresponding related entities and stream values will be represented inline, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "*",
+                  "DraftAdministrativeData",
+                  "SiblingEntity"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved purchase order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.PurchaseOrders"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Change a single purchase order.",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "requestBody": {
+          "description": "New property values",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskService.PurchaseOrders-update"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a single purchase order.",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/PurchaseOrders(PurchaseOrder='{PurchaseOrder}',IsActiveEntity='{IsActiveEntity}')/RiskService.draftPrepare": {
+      "post": {
+        "summary": "Invoke action draftPrepare",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/RiskService.PurchaseOrders"
+                    }
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "parameters": [
+          {
+            "description": "key: PurchaseOrder",
+            "in": "path",
+            "name": "PurchaseOrder",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 10
+            }
+          },
+          {
+            "description": "key: IsActiveEntity",
+            "in": "path",
+            "name": "IsActiveEntity",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Action parameters",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "SideEffectsQualifier": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PurchaseOrders(PurchaseOrder='{PurchaseOrder}',IsActiveEntity='{IsActiveEntity}')/RiskService.draftActivate": {
+      "post": {
+        "summary": "Invoke action draftActivate",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/RiskService.PurchaseOrders"
+                    }
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "parameters": [
+          {
+            "description": "key: PurchaseOrder",
+            "in": "path",
+            "name": "PurchaseOrder",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 10
+            }
+          },
+          {
+            "description": "key: IsActiveEntity",
+            "in": "path",
+            "name": "IsActiveEntity",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ]
+      }
+    },
+    "/PurchaseOrders(PurchaseOrder='{PurchaseOrder}',IsActiveEntity='{IsActiveEntity}')/RiskService.draftEdit": {
+      "post": {
+        "summary": "Invoke action draftEdit",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/RiskService.PurchaseOrders"
+                    }
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "parameters": [
+          {
+            "description": "key: PurchaseOrder",
+            "in": "path",
+            "name": "PurchaseOrder",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 10
+            }
+          },
+          {
+            "description": "key: IsActiveEntity",
+            "in": "path",
+            "name": "IsActiveEntity",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Action parameters",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "PreserveChanges": {
+                    "type": "boolean",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PurchaseOrders(PurchaseOrder='{PurchaseOrder}',IsActiveEntity='{IsActiveEntity}')/DraftAdministrativeData": {
+      "parameters": [
+        {
+          "description": "key: PurchaseOrder",
+          "in": "path",
+          "name": "PurchaseOrder",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "maxLength": 10
+          }
+        },
+        {
+          "description": "key: IsActiveEntity",
+          "in": "path",
+          "name": "IsActiveEntity",
+          "required": true,
+          "schema": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieve draft administrative data of a purchase order.",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "parameters": [
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "DraftUUID",
+                  "CreationDateTime",
+                  "CreatedByUser",
+                  "DraftIsCreatedByMe",
+                  "LastChangeDateTime",
+                  "LastChangedByUser",
+                  "InProcessByUser",
+                  "DraftIsProcessedByMe"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved draft administrative data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.DraftAdministrativeData"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Change draft administrative data of a purchase order.",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "requestBody": {
+          "description": "New property values",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskService.DraftAdministrativeData-update"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete draft administrative data of a purchase order.",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/PurchaseOrders(PurchaseOrder='{PurchaseOrder}',IsActiveEntity='{IsActiveEntity}')/SiblingEntity": {
+      "parameters": [
+        {
+          "description": "key: PurchaseOrder",
+          "in": "path",
+          "name": "PurchaseOrder",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "maxLength": 10
+          }
+        },
+        {
+          "description": "key: IsActiveEntity",
+          "in": "path",
+          "name": "IsActiveEntity",
+          "required": true,
+          "schema": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieve sibling entity of a purchase order.",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "parameters": [
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "PurchaseOrder",
+                  "CompanyCode",
+                  "PurchaseOrderType",
+                  "Supplier",
+                  "PurchaseOrderDate",
+                  "IsActiveEntity",
+                  "HasActiveEntity",
+                  "HasDraftEntity"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$expand",
+            "description": "The value of $expand query option is a comma-separated list of navigation property names, stream property names, or $value indicating the stream content of a media-entity. The corresponding related entities and stream values will be represented inline, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "*",
+                  "DraftAdministrativeData",
+                  "SiblingEntity"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved sibling entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.PurchaseOrders"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/PurchaseOrders(PurchaseOrder='{PurchaseOrder}',IsActiveEntity='{IsActiveEntity}')/SiblingEntity/RiskService.draftPrepare": {
+      "post": {
+        "summary": "Invoke action draftPrepare",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/RiskService.PurchaseOrders"
+                    }
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "parameters": [
+          {
+            "description": "key: PurchaseOrder",
+            "in": "path",
+            "name": "PurchaseOrder",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 10
+            }
+          },
+          {
+            "description": "key: IsActiveEntity",
+            "in": "path",
+            "name": "IsActiveEntity",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Action parameters",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "SideEffectsQualifier": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PurchaseOrders(PurchaseOrder='{PurchaseOrder}',IsActiveEntity='{IsActiveEntity}')/SiblingEntity/RiskService.draftActivate": {
+      "post": {
+        "summary": "Invoke action draftActivate",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/RiskService.PurchaseOrders"
+                    }
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "parameters": [
+          {
+            "description": "key: PurchaseOrder",
+            "in": "path",
+            "name": "PurchaseOrder",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 10
+            }
+          },
+          {
+            "description": "key: IsActiveEntity",
+            "in": "path",
+            "name": "IsActiveEntity",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ]
+      }
+    },
+    "/PurchaseOrders(PurchaseOrder='{PurchaseOrder}',IsActiveEntity='{IsActiveEntity}')/SiblingEntity/RiskService.draftEdit": {
+      "post": {
+        "summary": "Invoke action draftEdit",
+        "tags": [
+          "PurchaseOrders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/RiskService.PurchaseOrders"
+                    }
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "parameters": [
+          {
+            "description": "key: PurchaseOrder",
+            "in": "path",
+            "name": "PurchaseOrder",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 10
+            }
+          },
+          {
+            "description": "key: IsActiveEntity",
+            "in": "path",
+            "name": "IsActiveEntity",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Action parameters",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "PreserveChanges": {
+                    "type": "boolean",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/RisksView": {
+      "get": {
+        "summary": "Retrieve a list of risks view.",
+        "tags": [
+          "RisksView"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/top"
+          },
+          {
+            "$ref": "#/components/parameters/skip"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "name": "$filter",
+            "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "name": "$orderby",
+            "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ID",
+                  "ID desc",
+                  "title",
+                  "title desc",
+                  "owner",
+                  "owner desc"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ID",
+                  "title",
+                  "owner"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved risks view",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Collection of RisksView",
+                  "properties": {
+                    "@odata.count": {
+                      "$ref": "#/components/schemas/count"
+                    },
+                    "value": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RiskService.RisksView"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a single risks view.",
+        "tags": [
+          "RisksView"
+        ],
+        "requestBody": {
+          "description": "New risks view",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskService.RisksView-create"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created risks view",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.RisksView"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/RisksView({ID})": {
+      "parameters": [
+        {
+          "description": "key: ID",
+          "in": "path",
+          "name": "ID",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieve a single risks view.",
+        "tags": [
+          "RisksView"
+        ],
+        "parameters": [
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ID",
+                  "title",
+                  "owner"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved risks view",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskService.RisksView"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Change a single risks view.",
+        "tags": [
+          "RisksView"
+        ],
+        "requestBody": {
+          "description": "New property values",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskService.RisksView-update"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a single risks view.",
+        "tags": [
+          "RisksView"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/$batch": {
+      "post": {
+        "summary": "Send a group of requests",
+        "description": "Group multiple requests into a single request payload, see [Batch Requests](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_BatchRequests).\n\n*Please note that \"Try it out\" is not supported for this request.*",
+        "tags": [
+          "Batch Requests"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Batch request",
+          "content": {
+            "multipart/mixed;boundary=request-separator": {
+              "schema": {
+                "type": "string"
+              },
+              "example": "--request-separator\nContent-Type: application/http\nContent-Transfer-Encoding: binary\n\nGET Risks HTTP/1.1\nAccept: application/json\n\n\n--request-separator--"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Batch response",
+            "content": {
+              "multipart/mixed": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "--response-separator\nContent-Type: application/http\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{...}\n--response-separator--"
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RiskService.BusinessPartners": {
+        "title": "BusinessPartners",
+        "type": "object",
+        "properties": {
+          "BusinessPartner": {
+            "type": "string",
+            "maxLength": 10,
+            "description": "Key identifying a business partner in the SAP system. The key is unique within a client."
+          },
+          "LastName": {
+            "type": "string",
+            "maxLength": 40,
+            "nullable": true
+          },
+          "FirstName": {
+            "type": "string",
+            "maxLength": 40,
+            "nullable": true
+          }
+        }
+      },
+      "RiskService.DraftAdministrativeData": {
+        "title": "DraftAdministrativeData",
+        "type": "object",
+        "properties": {
+          "DraftUUID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          },
+          "CreationDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
+            "nullable": true
+          },
+          "CreatedByUser": {
+            "type": "string",
+            "maxLength": 256,
+            "nullable": true
+          },
+          "DraftIsCreatedByMe": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "LastChangeDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
+            "nullable": true
+          },
+          "LastChangedByUser": {
+            "type": "string",
+            "maxLength": 256,
+            "nullable": true
+          },
+          "InProcessByUser": {
+            "type": "string",
+            "maxLength": 256,
+            "nullable": true
+          },
+          "DraftIsProcessedByMe": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "RiskService.DraftAdministrativeData-create": {
+        "title": "DraftAdministrativeData (for create)",
+        "type": "object",
+        "properties": {
+          "DraftUUID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          },
+          "CreationDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
+            "nullable": true
+          },
+          "CreatedByUser": {
+            "type": "string",
+            "maxLength": 256,
+            "nullable": true
+          },
+          "DraftIsCreatedByMe": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "LastChangeDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
+            "nullable": true
+          },
+          "LastChangedByUser": {
+            "type": "string",
+            "maxLength": 256,
+            "nullable": true
+          },
+          "InProcessByUser": {
+            "type": "string",
+            "maxLength": 256,
+            "nullable": true
+          },
+          "DraftIsProcessedByMe": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "required": [
+          "DraftUUID"
+        ]
+      },
+      "RiskService.DraftAdministrativeData-update": {
+        "title": "DraftAdministrativeData (for update)",
+        "type": "object",
+        "properties": {
+          "CreationDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
+            "nullable": true
+          },
+          "CreatedByUser": {
+            "type": "string",
+            "maxLength": 256,
+            "nullable": true
+          },
+          "DraftIsCreatedByMe": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "LastChangeDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
+            "nullable": true
+          },
+          "LastChangedByUser": {
+            "type": "string",
+            "maxLength": 256,
+            "nullable": true
+          },
+          "InProcessByUser": {
+            "type": "string",
+            "maxLength": 256,
+            "nullable": true
+          },
+          "DraftIsProcessedByMe": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "RiskService.Mitigations": {
+        "title": "Mitigations",
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true,
+            "description": "{i18n>UserID.Description}"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
+            "nullable": true
+          },
+          "modifiedBy": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true,
+            "description": "{i18n>UserID.Description}"
+          },
+          "ID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          },
+          "descr": {
+            "type": "string",
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeline": {
+            "type": "string",
+            "nullable": true
+          },
+          "risks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RiskService.Risks"
+            }
+          },
+          "risks@odata.count": {
+            "$ref": "#/components/schemas/count"
+          }
+        }
+      },
+      "RiskService.Mitigations-create": {
+        "title": "Mitigations (for create)",
+        "type": "object",
+        "properties": {
+          "descr": {
+            "type": "string",
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeline": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "RiskService.Mitigations-update": {
+        "title": "Mitigations (for update)",
+        "type": "object",
+        "properties": {
+          "descr": {
+            "type": "string",
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeline": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "RiskService.PurchaseOrders": {
+        "title": "PurchaseOrders",
+        "type": "object",
+        "properties": {
+          "PurchaseOrder": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "CompanyCode": {
+            "type": "string",
+            "maxLength": 4,
+            "nullable": true
+          },
+          "PurchaseOrderType": {
+            "type": "string",
+            "maxLength": 4,
+            "nullable": true
+          },
+          "Supplier": {
+            "type": "string",
+            "maxLength": 10,
+            "nullable": true
+          },
+          "PurchaseOrderDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2017-04-13",
+            "nullable": true
+          },
+          "IsActiveEntity": {
+            "type": "boolean",
+            "default": true
+          },
+          "HasActiveEntity": {
+            "type": "boolean",
+            "default": false
+          },
+          "HasDraftEntity": {
+            "type": "boolean",
+            "default": false
+          },
+          "DraftAdministrativeData": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RiskService.DraftAdministrativeData"
+              }
+            ],
+            "nullable": true
+          },
+          "SiblingEntity": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RiskService.PurchaseOrders"
+              }
+            ],
+            "nullable": true
+          }
+        }
+      },
+      "RiskService.PurchaseOrders-create": {
+        "title": "PurchaseOrders (for create)",
+        "type": "object",
+        "properties": {
+          "PurchaseOrder": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "CompanyCode": {
+            "type": "string",
+            "maxLength": 4,
+            "nullable": true
+          },
+          "PurchaseOrderType": {
+            "type": "string",
+            "maxLength": 4,
+            "nullable": true
+          },
+          "Supplier": {
+            "type": "string",
+            "maxLength": 10,
+            "nullable": true
+          },
+          "PurchaseOrderDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2017-04-13",
+            "nullable": true
+          },
+          "IsActiveEntity": {
+            "type": "boolean",
+            "default": true
+          },
+          "HasActiveEntity": {
+            "type": "boolean",
+            "default": false
+          },
+          "HasDraftEntity": {
+            "type": "boolean",
+            "default": false
+          },
+          "DraftAdministrativeData": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RiskService.DraftAdministrativeData-create"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "PurchaseOrder",
+          "IsActiveEntity"
+        ]
+      },
+      "RiskService.PurchaseOrders-update": {
+        "title": "PurchaseOrders (for update)",
+        "type": "object",
+        "properties": {
+          "CompanyCode": {
+            "type": "string",
+            "maxLength": 4,
+            "nullable": true
+          },
+          "PurchaseOrderType": {
+            "type": "string",
+            "maxLength": 4,
+            "nullable": true
+          },
+          "Supplier": {
+            "type": "string",
+            "maxLength": 10,
+            "nullable": true
+          },
+          "PurchaseOrderDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2017-04-13",
+            "nullable": true
+          },
+          "HasActiveEntity": {
+            "type": "boolean",
+            "default": false
+          },
+          "HasDraftEntity": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      },
+      "RiskService.Risks": {
+        "title": "Risks",
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true,
+            "description": "{i18n>UserID.Description}"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
+            "nullable": true
+          },
+          "modifiedBy": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true,
+            "description": "{i18n>UserID.Description}"
+          },
+          "ID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          },
+          "prio": {
+            "type": "string",
+            "maxLength": 5,
+            "nullable": true
+          },
+          "descr": {
+            "type": "string",
+            "nullable": true
+          },
+          "miti": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RiskService.Mitigations"
+              }
+            ],
+            "nullable": true
+          },
+          "miti_ID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef",
+            "nullable": true
+          },
+          "impact": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bp": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RiskService.BusinessPartners"
+              }
+            ],
+            "nullable": true
+          },
+          "bp_BusinessPartner": {
+            "type": "string",
+            "maxLength": 10,
+            "nullable": true
+          },
+          "criticality": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "RiskService.Risks-create": {
+        "title": "Risks (for create)",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          },
+          "prio": {
+            "type": "string",
+            "maxLength": 5,
+            "nullable": true
+          },
+          "descr": {
+            "type": "string",
+            "nullable": true
+          },
+          "miti_ID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef",
+            "nullable": true
+          },
+          "impact": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bp_BusinessPartner": {
+            "type": "string",
+            "maxLength": 10,
+            "nullable": true
+          },
+          "criticality": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "RiskService.Risks-update": {
+        "title": "Risks (for update)",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          },
+          "prio": {
+            "type": "string",
+            "maxLength": 5,
+            "nullable": true
+          },
+          "descr": {
+            "type": "string",
+            "nullable": true
+          },
+          "miti_ID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef",
+            "nullable": true
+          },
+          "impact": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bp_BusinessPartner": {
+            "type": "string",
+            "maxLength": 10,
+            "nullable": true
+          },
+          "criticality": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "RiskService.RisksView": {
+        "title": "RisksView",
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "RiskService.RisksView-create": {
+        "title": "RisksView (for create)",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "RiskService.RisksView-update": {
+        "title": "RisksView (for update)",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 100,
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "count": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "string"
+          }
+        ],
+        "description": "The number of entities in the collection. Available when using the [$count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount) query option."
+      },
+      "error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "target": {
+                "type": "string"
+              },
+              "details": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "code",
+                    "message"
+                  ],
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "target": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "innererror": {
+                "type": "object",
+                "description": "The structure of this object is service-specific"
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "top": {
+        "name": "$top",
+        "in": "query",
+        "description": "Show only the first n items, see [Paging - Top](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptiontop)",
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "example": 50
+      },
+      "skip": {
+        "name": "$skip",
+        "in": "query",
+        "description": "Skip the first n items, see [Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionskip)",
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "count": {
+        "name": "$count",
+        "in": "query",
+        "description": "Include count of items, see [Count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount)",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "search": {
+        "name": "$search",
+        "in": "query",
+        "description": "Search items by search phrases, see [Searching](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionsearch)",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "error": {
+        "description": "Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            }
+          }
+        }
+      }
+    }
+  }
+}

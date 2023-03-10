@@ -1,3 +1,14 @@
+# Run CAP locally
+
+To run this app locally type in the console
+
+```sh
+cds watch --profile development
+```
+
+Here you can open UI with email and password from *.cdsrc.json* file.
+
+
 # Welcome to the Learning Journey "Building side-by-side extensions on SAP BTP"
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/extension-suite-learning-journey)](https://api.reuse.software/info/github.com/SAP-samples/extension-suite-learning-journey)
 

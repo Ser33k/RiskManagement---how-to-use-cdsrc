@@ -2,7 +2,9 @@
   "scopes": [
     {
       "name": "$XSAPPNAME.RiskViewer",
-      "description": "RiskViewer"
+      "description": "RiskViewer",
+      "granted-apps" : [ "$XSAPPNAME(application,riskfiori)"],
+      "grant-as-authority-to-apps" : [ "$XSAPPNAME(application, riskfiori)"]
     },
     {
       "name": "$XSAPPNAME.RiskManager",

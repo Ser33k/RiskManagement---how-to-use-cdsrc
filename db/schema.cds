@@ -22,7 +22,7 @@ entity PurchaseOrders as projection on externalPOs.A_PurchaseOrder {
 
 entity Risks : managed {
     key ID          : UUID @(Core.Computed : true);
-        title       : String(100);
+        title       : String(100) @title : 'Title';
         owner       : String;
         prio        : String(5);
         descr       : String;

@@ -1,5 +1,6 @@
 // Imports
-const cds = require("@sap/cds");
+const proxy = require('@sap/cds-odata-v2-adapter-proxy')
+const cds = require('@sap/cds')
 require('dotenv').config();
 
 /**
@@ -7,7 +8,7 @@ require('dotenv').config();
    */
 module.exports = cds.service.impl(async function () {
    // Define constants for the Risk and BusinessPartners entities from the risk-service.cds file
-   const { Risks, BusinessPartners, PurchaseOrders } = this.entities;
+   const { Risks, BusinessPartners, PurchaseOrders, Mitigations } = this.entities;
 
    /**
    * Set criticality after a READ operation on /risks
@@ -50,6 +51,7 @@ module.exports = cds.service.impl(async function () {
    const POsrv = await cds.connect.to("API_PURCHASEORDER_PROCESS_SRV");
 
    this.on("READ", PurchaseOrders, async req => {
+      console.log("AAAAAAAAAAAA: " + req);
       return await POsrv.run(req.query);
       // return await POsrv.transaction(req).send({
       //    query: req.query,
@@ -59,6 +61,13 @@ module.exports = cds.service.impl(async function () {
       // });
    })
 
+   // this.before("*", Mitigations, async req => {
+   //    console.log("Mitigations user: " + JSON.stringify(req.user._roles));
+   //    console.log(" Mitigationsis RiskManager: " + req.user.is('RiskManager'));
+   //    console.log("Mitigations is authenticated: " + req.user.is('authenticated-user'));
+
+   //    // req.user.is('RiskManager') || req.reject(403);
+   // })
    /**
    * Event-handler on risks.
    * Retrieve BusinessPartner data from the external API
@@ -69,12 +78,15 @@ module.exports = cds.service.impl(async function () {
         As this is not possible, the risk entity and the business partner entity are in different systems (SAP BTP and S/4 HANA Cloud), 
         if there is such an expand, remove it
       */
+
+      console.log("user: " + JSON.stringify(req.user._roles));
+      console.log("is RiskManager: " + req.user.is('risk-management!t84222.RiskManager'));
+      console.log("is authenticated: " + req.user.is('authenticated-user'));
       if (!req.query.SELECT.columns) return next();
 
       const expandIndex = req.query.SELECT.columns.findIndex(
          ({ expand, ref }) => expand && ref[0] === "bp"
       );
-      console.log(req.query.SELECT.columns);
       if (expandIndex < 0) return next();
 
       req.query.SELECT.columns.splice(expandIndex, 1);
@@ -109,5 +121,9 @@ module.exports = cds.service.impl(async function () {
          );
       } catch (error) { }
    });
+
+   // this.before('*', req => {
+   // }
+   // )
 
 });

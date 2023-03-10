@@ -20,11 +20,7 @@
                 id="table"
                 width="auto"
                 items="{
-                    path: '/PurchaseOrders',
-                    sorter: {
-                        path: 'PurchaseOrder',
-                        descending: false
-                    }
+                    path: '/Mitigations'
                 }"
                 noDataText="{worklistView>/tableNoDataText}"
                 busyIndicatorDelay="{worklistView>/tableBusyDelay}"
@@ -67,9 +63,8 @@
                         press=".onPress">
                         <cells>
                             <ObjectIdentifier
-                                title="{PurchaseOrder}"/>
-                            <ObjectNumber
-                                unit="{CompanyCode}" />
+                                title="{ID}"/>
+                            <Text text="{descr}"></Text>
                         </cells>
                     </ColumnListItem>
                 </items>

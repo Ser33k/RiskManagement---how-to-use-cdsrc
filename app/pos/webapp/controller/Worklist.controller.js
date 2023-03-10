@@ -125,7 +125,7 @@ sap.ui.define([
          */
         _showObject : function (oItem) {
             this.getRouter().navTo("object", {
-                objectId: oItem.getBindingContext().getPath().substring("/PurchaseOrders".length)
+                objectId: oItem.getBindingContext().getPath().substring("/Mitigations".length)
             });
         },
 
